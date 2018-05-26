@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class ="row box">
+      <div class="col-sm-8">
+        <img src ="{{url_for('video_feed')}}"> </img>
+      </div>
+      <div class="col-sm-4">
+        <form action="" class="form-msg" method="POST">
+          <h3>Type your message</h3>
+          <div style="padding-top: 5px;"></div>
+          <input  id = 'mymsg' type="text" class="message form-control" placeholder="Messages">
+          <div style="padding-top: 5px;"></div>
+          <button  type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-send"></span> Send</button>
+        </form>
+         <div class="no-message">
+          <h3 style='text-align:center; color: #ccc;'>Live Chat</h3>
+          <div id = 'messages' class="message_holder"></div>
+        </div>
+      </div>
+</div>
+
+<script type="text/javascript">
+   $(document).ready(function() {
+
+   var socket = io.connect('http://localhost:5000', {reconnect: true});;
+   console.log(socket)
+   socket.on('connect', function()
+   {
+
+        socket.emit('login_message',
+        {
+            data: 'connected'
+        });
+
+
+   });
+
+   socket.on('my response', function(msg){
+        console.log(msg)
+        $("#messages").append('<div class="msg_bbl"><b style="color: #000">'+ msg['username'] +'</b> '+msg['data'] +'</div>');
+        console.log('recieved a message');
+   });
+
+
+  $('form').on('submit', function(e){
+  e.preventDefault()
+  msg = $('#mymsg').val()
+  socket.emit('messages',{
+  data: msg
+  });
+  $('#mymsg').val('');
+  })
+  });
+</script>
+
+
+
+{% endblock %}

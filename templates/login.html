@@ -1,0 +1,38 @@
+{% from "/includes/_formhelpers.html" import render_field %}
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class = "row box">
+        <div class="col-8">
+            <img class = "img-fluid" src="{{url_for('static', filename='index_picture.jpg')}}"> </img>
+        </div>
+        <div class="col-4">
+            <div class="container">
+                <div class="sign-up-btn sign-up-btn-white">
+                    Login
+
+                </div>
+                <div class="sign-up-btn">
+                    Sign up
+
+                </div>
+            <div class="whitespace">
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <input type = 'text' class="form-control" name="username" placeholder="Username" value={{request.form.username}}>
+                    </div>
+                    <div class="form-group">
+                        <input type = 'password' class="form-control" name="password" placeholder="Password" value={{request.form.username}}>
+                    </div>
+                    <button class="btn btn-primary">Log in</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    </div>
+
+{% endblock %}
